@@ -1,0 +1,6 @@
+﻿@model IEnumerable<Post>
+@{ ViewBag.Title = "Home Page"; }
+
+@foreach (var item in Model)
+{
+@Html.Partial("_ListPosts", item)}

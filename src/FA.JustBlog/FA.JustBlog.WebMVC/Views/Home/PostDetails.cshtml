@@ -1,0 +1,13 @@
+﻿@model Post
+@{
+    ViewBag.Title = "PostDetails";
+}
+<section class="post_details">
+    <h1>@Model.Title</h1>
+    <div class="short_description">
+        @Model.ShortDescription
+    </div>
+    <div class="post_content">
+        <p>@Model.PostContent</p>
+    </div>
+</section>

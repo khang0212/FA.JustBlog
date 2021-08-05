@@ -1,0 +1,161 @@
+﻿@model FA.JustBlog.Common.Paginated<Tag>
+
+@{ ViewBag.Title = "Tag Management"; }
+
+
+<style>
+    .button {
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    element.style {
+        font-size: 1em;
+        color: white;
+        background-color: #17a2b8;
+    }
+
+    .button1 {
+        background-color: blueviolet;
+    }
+    /* Green */
+    .button2 {
+        background-color: #008CBA;
+    }
+    /* Blue */
+    body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: green;
+        text-align: left;
+        background-color: burlywood;
+    }
+</style>
+<h2 class="text-center">Tag Management</h2>
+<hr />
+<div>
+    <a href="@Url.Action("Create", "TagManagement")" class="fa-edit">Add</a>
+
+    <form action="@Url.Action("Index", "TagManagement")" method="get" class="form-inline float-right">
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" size="30" style="height:32px" class="form-control mr-3" id="inputSearch" name="SearchString" value="@ViewData["currentFilter"]" placeholder="enter something">
+            <button type="submit" class=" form-control btn btn-success">
+                Search
+
+            </button>
+            <a href="@Url.Action("Index")" class="btn btn-default">
+                <span style="font-size: 1em; color: rebeccapurple;">
+                    <i class="fa-info"></i> Refresh
+                </span>
+            </a>
+        </div>
+    </form>
+</div>
+
+@if (!Model.Any())
+{
+<h3 class="text-center">Don't have a tag yet.</h3> }
+else
+{
+<table class="table table-condensed table-bordered">
+    <tr class="d-flex">
+        <th class="col-md-2">
+            <a href="@Url.Action("Index", "TagManagement", new { sortOrder = ViewData["NameSortParm"], currentFilter = ViewData["CurrentFilter"] })">Name</a>
+        </th>
+        <th class="col-md-2">
+            <a href="@Url.Action("Index", "TagManagement", new { sortOrder = ViewData["UrlSlugSortParm"], currentFilter = ViewData["CurrentFilter"] })">Url Slug</a>
+        </th>
+        <th class="col-md-2">
+            <a href="@Url.Action("Index", "TagManagement", new { sortOrder = ViewData["DescriptionSortParm"], currentFilter = ViewData["CurrentFilter"] })">Description</a>
+        </th>
+        <th class="col-md-2">
+            <a href="@Url.Action("Index", "TagManagement", new { sortOrder = ViewData["TotalPostsSortParm"], currentFilter = ViewData["CurrentFilter"] })">Total Posts</a>
+        </th>
+        <th class="col-md-2">
+            <a href="@Url.Action("Index", "TagManagement", new { sortOrder = ViewData["InsertedAtSortParm"], currentFilter = ViewData["CurrentFilter"] })">Inserted At</a>
+        </th>
+        <th class="col-md-2">
+            <a href="@Url.Action("Index", "TagManagement", new { sortOrder = ViewData["UpdatedAtSortParm"], currentFilter = ViewData["CurrentFilter"] })">Updated At</a>
+        </th>
+        <th class="col-md-2">Manage</th>
+    </tr>
+
+    @foreach (var tag in Model)
+    {
+<tr class="d-flex">
+    <td class="col-md-2">
+        <a href="@Url.Action("Details", new { id = tag.Id})">
+            @tag.Name
+        </a>
+    </td>
+    <td class="col-md-2">
+        @tag.UrlSlug
+    </td>
+    <td class="col-md-2">
+        @tag.Description
+    </td>
+    <td class="col-md-2">
+        @Html.Raw(tag.Posts.Count)
+    </td>
+    <td class="col-md-2">
+        @tag.InsertedAt
+    </td>
+    <td class="col-md-2">
+        @tag.UpdatedAt
+    </td>
+    <td class="col-md-2">
+        <form action="@Url.Action("Delete", "TagManagement", new{ id = tag.Id })" method="post">
+            <a href="@Url.Action("Edit", "TagManagement", new { id = tag.Id})" class="btn btn-info">
+                <span style="font-size: 1em; color:white;background-color : #17a2b8">
+                    Update<i class="fas fa-edit"></i>
+                </span>
+            </a>
+            <button type="submit" onclick="return confirm('Are you sure to delete this tag?');" class="btn btn-info">
+                <span style="font-size: 1em; color:white;background-color : #17a2b8">
+                    Delete<i class="fas fa-trash"></i>
+                </span>
+            </button>
+        </form>
+    </td>
+</tr>}
+</table>
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        @{ var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                            ViewBag.PageRange = 3; }
+                        <li class="page-item">
+                            <a href="@Url.Action("Index", "TagManagement", new { sortOrder=ViewData["CurrentSort"], pageIndex=1, currentFilter=ViewData["CurrentFilter"] })"
+                               class="btn page-link @prevDisabled"><<</a>
+                        <li class="page-item">
+                            <a href="@Url.Action("Index", "TagManagement", new { sortOrder=ViewData["CurrentSort"], pageIndex=(Model.PageIndex - 1 <= 0 ? 1 : Model.PageIndex - 1), currentFilter=ViewData["CurrentFilter"] })"
+                               class="btn page-link @prevDisabled"><</a>
+                        </li>
+                        @for (int i = 1; i <= Model.TotalPages; i++)
+                        {
+                            if (i >= Model.PageIndex - ViewBag.PageRange && i <= Model.PageIndex + ViewBag.PageRange)
+                            {
+        <li class="page-item">
+            <a class="@(i==Model.PageIndex ? "Current" : "") page-link"
+               href="@Url.Action("Index", "TagManagement", new { sortOrder=ViewData["CurrentSort"], pageIndex=i, currentFilter=ViewData["CurrentFilter"] })">@i</a>
+        </li>}
+                        }
+                        <li class="page-item">
+                            <a href="@Url.Action("Index", "TagManagement", new { sortOrder=ViewData["CurrentSort"], pageIndex=(Model.PageIndex + 1 > Model.TotalPages ? Model.TotalPages : Model.PageIndex + 1), currentFilter=ViewData["CurrentFilter"] })"
+                               class="btn page-link @nextDisabled">></a>
+                        <li class="page-item">
+                            <a href="@Url.Action("Index", "TagManagement", new { sortOrder=ViewData["CurrentSort"], pageIndex=(Model.TotalPages), currentFilter=ViewData["CurrentFilter"] })"
+                               class="btn page-link @nextDisabled">>></a>
+                    </ul>
+                </nav>}

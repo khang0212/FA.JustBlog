@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Tag>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@foreach (var item in Model)
+{
+    <span class="badge badge-danger">
+        <div>@item.Name</div>
+    </span>
+}
+
+
+
