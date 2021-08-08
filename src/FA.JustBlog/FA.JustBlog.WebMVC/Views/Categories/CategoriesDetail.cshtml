@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Post>
+@{
+    ViewBag.Title = ViewBag.CategoryName;
+}
+
+@foreach (var item in Model)
+{
+    <img src="~/assets/image/@item.ImageUrl" class="card-img-top" alt="@item.ImageUrl">
+    <h1>@item.Title</h1>
+    <div>@item.UrlSlug</div>
+    <div>@item.PostContent</div>
+}

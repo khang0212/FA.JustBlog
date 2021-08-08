@@ -161,7 +161,7 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
             return View(postViewModel);
         }
 
-        // GET: Admin/PostManagement/Edit/5
+        
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -187,9 +187,7 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
             return View(postViewModel);
         }
 
-        // POST: Admin/PostManagement/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
@@ -215,7 +213,6 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
             return View(postViewModel);
         }
 
-        // GET: Admin/PostManagement/Delete/5
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -230,7 +227,7 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
             return View(post);
         }
 
-        // POST: Admin/PostManagement/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)

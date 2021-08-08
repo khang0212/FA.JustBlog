@@ -153,6 +153,7 @@
     <Compile Include="Areas\Admin\Controllers\CategoryManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\PostManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\TagManagementController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\TagController.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="ViewModel\TagViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Style1\style.css" />
     <Content Include="assets\image\50519803_1987747531302011_4072543021483163648_o.jpg" />
     <Content Include="assets\image\54517101_2072104806199616_4591411663961325568_o.jpg" />
     <Content Include="assets\image\55602644_2084208871655876_3394146254110851072_o.jpg" />
@@ -354,6 +356,8 @@
     <Content Include="Views\Tag\_PopularTags.cshtml" />
     <Content Include="Views\Home\_PartialAboutCard.cshtml" />
     <Content Include="Views\Home\_CategoryView.cshtml" />
+    <Content Include="Views\Categories\CategoriesDetail.cshtml" />
+    <Content Include="Views\Post\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -18,14 +18,14 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
     public class TagManagementController : Controller
     {
         private JustBlogDbContext db = new JustBlogDbContext();
-        private readonly ITagServices _tagServices;
+        private readonly ITagServices _tagService;
 
         public TagManagementController(ITagServices tagServices)
         {
-            _tagServices = tagServices;
+            _tagService = tagServices;
         }
 
-        // GET: Admin/TagManagement
+
         public async Task<ActionResult> Index(string sortOrder, string currentFilter, string searchString,
             int? pageIndex = 1, int pageSize = 2)
         {
@@ -49,7 +49,6 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            // x => x.Name.Contains(searchString)
             Expression<Func<Tag, bool>> filter = null;
 
             if (!string.IsNullOrEmpty(searchString))
@@ -57,7 +56,7 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
                 filter = c => c.Name.Contains(searchString);
             }
 
-            // q => q.OrderByDescending(c => c.Name)
+      
             Func<IQueryable<Tag>, IOrderedQueryable<Tag>> orderBy = null;
 
             switch (sortOrder)
@@ -100,24 +99,19 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
                     break;
             }
 
-            var tags = await _tagServices.GetAsync(filter: filter, orderBy: orderBy, pageIndex: pageIndex ?? 1, pageSize: pageSize);
+            var tags = await _tagService.GetAsync(filter: filter, orderBy: orderBy, pageIndex: pageIndex ?? 1, pageSize: pageSize);
 
             return View(tags);
         }
 
 
-
-
-        // GET: Admin/TagManagement/Create
         public ActionResult Create()
         {
             var tagViewModel = new TagViewModel();
             return View(tagViewModel);
         }
 
-        // POST: Admin/TagManagement/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(TagViewModel tagViewModel)
@@ -131,21 +125,20 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
                     UrlSlug = tagViewModel.UrlSlug,
                     Description = tagViewModel.Description
                 };
-                _tagServices.Add(tag);
+                _tagService.Add(tag);
                 return RedirectToAction("Index");
             }
 
             return View(tagViewModel);
         }
 
-        // GET: Admin/TagManagement/Edit/5
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var tag = _tagServices.GetById((Guid)id);
+            var tag = _tagService.GetById((Guid)id);
             if (tag == null)
             {
                 return HttpNotFound();
@@ -160,9 +153,6 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
             return View(tagViewModel);
         }
 
-        // POST: Admin/TagManagement/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
@@ -170,7 +160,7 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var tag = await _tagServices.GetByIdAsync(tagViewModel.Id);
+                var tag = await _tagService.GetByIdAsync(tagViewModel.Id);
                 if (tag == null)
                 {
                     return HttpNotFound();
@@ -179,45 +169,34 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
                 tag.UrlSlug = tagViewModel.UrlSlug;
                 tag.Description = tagViewModel.Description;
 
-                _tagServices.Update(tag);
+                _tagService.Update(tag);
                 return RedirectToAction("Index");
             }
             return View(tagViewModel);
         }
 
-        // GET: Admin/TagManagement/Delete/5
-        public ActionResult Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Tag tag = db.Tags.Find(id);
-            if (tag == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tag);
-        }
-
-        // POST: Admin/TagManagement/Delete/5
+        
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public ActionResult Delete(Guid id)
         {
-            Tag tag = db.Tags.Find(id);
-            db.Tags.Remove(tag);
-            db.SaveChanges();
+            Tag tag = _tagService.GetById(id);
+            var result = false;
+            if (tag != null)
+            {
+                result = _tagService.Delete(tag.Id);
+            }
+
+            if (result)
+            {
+                TempData["Message"] = "Delete Successful";
+            }
+            else
+            {
+                TempData["Message"] = "Delete Failed";
+            }
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+
     }
 }

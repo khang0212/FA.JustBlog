@@ -22,7 +22,7 @@
                 {
                     Id = Guid.NewGuid(),
                     Name = "Michael Jackson",
-                    UrlSlug =   "MJdfgdf",
+                    UrlSlug =   "www.spankbang.com",
                     Description ="Michael Joseph Jackson was an American singer, songwriter, " +
                     "and dancerm, he also is regarded as one of the most significant cultural figures of the 20th century",
                     IsDeleted = false
@@ -31,7 +31,7 @@
                 {
                     Id = Guid.NewGuid(),
                     Name = "Taylor Swift",
-                    UrlSlug =   "TSgfdgdf",
+                    UrlSlug =   "www.xnxx.com",
                     Description ="Taylor Alison Swift is an American singer-songwriter. Her narrative songwriting, which is often inspired by her personal experiences," +
                     " has received widespread media coverage and critical praise",
                     IsDeleted = false

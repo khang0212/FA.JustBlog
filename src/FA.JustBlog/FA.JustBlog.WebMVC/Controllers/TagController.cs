@@ -13,7 +13,7 @@ namespace FA.JustBlog.WebMVC.Controllers
             _tagServices = tagServices;
         }
 
-        // GET: Tag
+   
         public ActionResult Index()
         {
             return View();

@@ -10,35 +10,48 @@ namespace FA.JustBlog.WebMVC.Controllers
 {
     public class PostController : Controller
     {
-        // GET: Post
-        private readonly IPostServices _postServices;
-        private readonly ICategoryServices _categoryServices;
+
+        private readonly IPostServices _postService;
+        private readonly ICategoryServices _categoryService;
 
         public PostController(IPostServices postServices, ICategoryServices categoryServices)
         {
-            _postServices = postServices;
-            _categoryServices = categoryServices;
+            _postService = postServices;
+            _categoryService = categoryServices;
         }
-        // GET: Post
+
         public async Task<ActionResult> Index(int? pageIndex = 1, int? pageSize = 3)
         {
             Expression<Func<Post, bool>> filter = null;
 
             Func<IQueryable<Post>, IOrderedQueryable<Post>> orderBy = o => o.OrderBy(p => p.Title);
-            var posts = await _postServices.GetAsync(filter: filter, orderBy: orderBy,
+            var posts = await _postService.GetAsync(filter: filter, orderBy: orderBy,
                 pageIndex: pageIndex ?? 1, pageSize: pageSize ?? 3);
             return View(posts);
         }
 
-        public async Task<ActionResult> LastestPosts()
+
+        public ActionResult LastestPosts()
         {
-            var lastestPost = await _postServices.GetLatestPostAsync(5);
-            return View(lastestPost);
+            var lastestPosts = Task.Run(() => _postService.GetLatestPostAsync(5)).Result;
+            ViewBag.PartialViewTitle = "Lastest Posts";
+            return PartialView("_ListPosts", lastestPosts);
         }
-        public async Task<ActionResult> MostViewedPosts()
+        public ActionResult MostViewedPosts()
         {
-            var highestView = await _postServices.GetHighestViewCountPostAsync(5);
-            return View(highestView);
+            var lastestPosts = Task.Run(() => _postService.LargestViewPost()).Result;
+            ViewBag.PartialViewTitle = "Most Viewed Posts";
+            return PartialView("_ListPosts", lastestPosts);
+        }
+
+        public async Task<ActionResult> Details(Guid id)
+        {
+            var post = await _postService.GetByIdAsync(id);
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+            return View(post);
         }
     }
 }

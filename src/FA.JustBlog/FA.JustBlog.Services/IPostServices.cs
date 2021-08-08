@@ -17,11 +17,12 @@ namespace FA.JustBlog.Services
         Task<int> CountPostsForCategoryAsync(string category);
 
         Task<IEnumerable<Post>> GetPostsByCategoryAsync(string category);
+        Task<IEnumerable<Post>> GetPostsByCategoryAsync(Guid id);
 
         Task<int> CountPostsForTagAsync(string tag);
 
         Task<IEnumerable<Post>> GetPostsByTagAsync(string tag);
 
-        Task<IEnumerable<Post>> GetHighestViewCountPostAsync(int count);
+        Task<IEnumerable<Post>> LargestViewPost();
     }
 }
