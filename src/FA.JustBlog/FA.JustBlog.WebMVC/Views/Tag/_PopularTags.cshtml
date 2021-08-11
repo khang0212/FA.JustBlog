@@ -2,13 +2,11 @@
 @{
     ViewBag.Title = "Home Page";
 }
-
-@foreach (var item in Model)
+@foreach (var element in Model)
 {
-    <span class="badge badge-danger">
-        <div>@item.Name</div>
+    <span class="badge badge-info">
+        <a href="@Url.Action("DetailTags", "Tag", new { id = element.Id})">
+            @element.Name
+        </a>
     </span>
 }
-
-
-

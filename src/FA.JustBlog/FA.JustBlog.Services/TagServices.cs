@@ -19,7 +19,7 @@ namespace FA.JustBlog.Services
             return await _unitOfWork.TagRepository.GetQuery().CountAsync(p => p.Posts.Any(t => t.Title == post));
         }
 
-        public IEnumerable<Tag> GetHighestViewCountTag(int count)
+        public IEnumerable<Tag> GetMostViewedTag(int count)
         {
             return _unitOfWork.TagRepository.GetQuery().OrderByDescending(p => p.Count).Take(count).ToList();
         }

@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = Model.Title;
 }
+<link href="~/Areas/Admin/Style1/style.css" rel="stylesheet" type="text/css" />
 <img src="~/assets/image/@Model.ImageUrl" class="card-img-top" alt="@Model.ImageUrl">
 <h1>@Model.Title</h1>
-<h2>@Model.PostContent</h2>
+<h5>Description  : @Model.PostContent</h5>
+<h5>Updated at :  @Model.PublishedDate</h5>
+<h5>URL :  @Model.UrlSlug</h5>

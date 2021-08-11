@@ -19,6 +19,7 @@ namespace FA.JustBlog.Services.BaseServices
             _unitOfWork = unitOfWork;
         }
 
+
         public virtual int Add(TEntity entity)
         {
             if (entity == null)
@@ -29,7 +30,7 @@ namespace FA.JustBlog.Services.BaseServices
             return _unitOfWork.SaveChanges();
         }
 
-        public async Task<int> AddAsync(TEntity entity)
+        public virtual async Task<int> AddAsync(TEntity entity)
         {
             if (entity == null)
             {
@@ -113,16 +114,6 @@ namespace FA.JustBlog.Services.BaseServices
             return await Paginated<TEntity>.CreateAsync(query.AsNoTracking(), pageIndex, pageSize);
         }
 
-        public virtual TEntity GetById(Guid id)
-        {
-            return _unitOfWork.GenericRepository<TEntity>().GetById(id);
-        }
-
-        public virtual async Task<TEntity> GetByIdAsync(Guid id)
-        {
-            return await _unitOfWork.GenericRepository<TEntity>().GetByIdAsync(id);
-        }
-
         public virtual bool Update(TEntity entity)
         {
             if (entity == null)
@@ -142,5 +133,17 @@ namespace FA.JustBlog.Services.BaseServices
             _unitOfWork.GenericRepository<TEntity>().Update(entity);
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
+
+        public virtual TEntity GetById(Guid id)
+        {
+            return _unitOfWork.GenericRepository<TEntity>().GetById(id);
+        }
+
+        public virtual async Task<TEntity> GetByIdAsync(Guid id)
+        {
+            return await _unitOfWork.GenericRepository<TEntity>().GetByIdAsync(id);
+        }
+
+        
     }
 }

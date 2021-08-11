@@ -167,7 +167,7 @@
     <Compile Include="ViewModel\TagViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Admin\Style1\style.css" />
+    <Content Include="Style1\style.css" />
     <Content Include="assets\image\50519803_1987747531302011_4072543021483163648_o.jpg" />
     <Content Include="assets\image\54517101_2072104806199616_4591411663961325568_o.jpg" />
     <Content Include="assets\image\55602644_2084208871655876_3394146254110851072_o.jpg" />
@@ -348,7 +348,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Shared\_Footer.cshtml" />
-    <Content Include="Views\Shared\_PostView.cshtml" />
+    <Content Include="Views\Shared\PostOverview.cshtml" />
     <Content Include="Views\Home\PostDetails.cshtml" />
     <Content Include="Views\Post\_ListPosts.cshtml" />
     <Content Include="Views\Post\LastestPosts.cshtml" />
@@ -358,6 +358,7 @@
     <Content Include="Views\Home\_CategoryView.cshtml" />
     <Content Include="Views\Categories\CategoriesDetail.cshtml" />
     <Content Include="Views\Post\Details.cshtml" />
+    <Content Include="Views\Tag\DetailTags.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -56,7 +56,7 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
                 filter = c => c.Name.Contains(searchString);
             }
 
-      
+
             Func<IQueryable<Tag>, IOrderedQueryable<Tag>> orderBy = null;
 
             switch (sortOrder)
@@ -111,7 +111,7 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
             return View(tagViewModel);
         }
 
-      
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(TagViewModel tagViewModel)
@@ -175,7 +175,7 @@ namespace FA.JustBlog.WebMVC.Areas.Admin.Controllers
             return View(tagViewModel);
         }
 
-        
+
         [HttpPost, ActionName("Delete")]
         public ActionResult Delete(Guid id)
         {

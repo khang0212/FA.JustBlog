@@ -15,10 +15,6 @@ namespace FA.JustBlog.Services.BaseServices
 
         int AddRange(IEnumerable<TEntity> entities);
 
-        Task<int> AddRangeAsync(IEnumerable<TEntity> entities);
-
-        bool Update(TEntity entity);
-
         Task<bool> UpdateAsync(TEntity entity);
 
         bool Delete(Guid id);
@@ -32,6 +28,11 @@ namespace FA.JustBlog.Services.BaseServices
         IEnumerable<TEntity> GetAll();
 
         Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<int> AddRangeAsync(IEnumerable<TEntity> entities);
+
+        bool Update(TEntity entity);
+
+      
 
         /// <summary>
         /// Return entities with paging, filtering, ordering

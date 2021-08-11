@@ -27,21 +27,23 @@ namespace FA.JustBlog.WebMVC.Controllers
             Func<IQueryable<Post>, IOrderedQueryable<Post>> orderBy = o => o.OrderBy(p => p.Title);
             var posts = await _postService.GetAsync(filter: filter, orderBy: orderBy,
                 pageIndex: pageIndex ?? 1, pageSize: pageSize ?? 3);
+
             return View(posts);
+
         }
 
 
-        public ActionResult LastestPosts()
-        {
-            var lastestPosts = Task.Run(() => _postService.GetLatestPostAsync(5)).Result;
-            ViewBag.PartialViewTitle = "Lastest Posts";
-            return PartialView("_ListPosts", lastestPosts);
-        }
+        //public ActionResult LastestPosts()
+        //{
+        //    var lastest = Task.Run(() => _postService.GetLatestPostAsync(5)).Result;
+        //    ViewBag.PartialViewTitle = "Lastest Posts";
+        //    return PartialView("_ListPosts", lastest);
+        //}
         public ActionResult MostViewedPosts()
         {
-            var lastestPosts = Task.Run(() => _postService.LargestViewPost()).Result;
+            var most = Task.Run(() => _postService.GetMostViewedPost(5)).Result;
             ViewBag.PartialViewTitle = "Most Viewed Posts";
-            return PartialView("_ListPosts", lastestPosts);
+            return PartialView("MostViewedPosts", most);
         }
 
         public async Task<ActionResult> Details(Guid id)
